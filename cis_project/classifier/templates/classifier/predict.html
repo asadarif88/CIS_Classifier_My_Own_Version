@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CIS Classifier</title>
+        <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; max-width: 750px; margin: 40px auto; padding: 0 20px; color: #222; }
+    h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+    form { margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 8px; }
+    button { background: #3498db; color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+    button:hover { background: #2980b9; }
+    img { max-width: 350px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); margin-top: 15px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+    th, td { border: 1px solid #ddd; padding: 10px 12px; text-align: left; }
+    th { background: #2c3e50; color: white; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    .cis { color: #c0392b; font-weight: bold; }
+    .non-cis { color: #27ae60; font-weight: bold; }
+</style>
+
+</head>
+<body>
+    <h1>CIS Classifier</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if uploaded_image_url %}
+        <img src="{{ uploaded_image_url }}" alt="Uploaded image">
+    {% endif %}
+
+    {% if results %}
+        <table>
+            <tr>
+                <th>Model</th>
+                <th>Prediction</th>
+                <th>Confidence</th>
+                <th>Model Test Accuracy</th>
+            </tr>
+            {% for r in results %}
+            <tr>
+                <td>{{ r.model_name }}</td>
+                {% comment %} <td>{{ r.prediction }}</td> {% endcomment %}
+                <td class="{% if r.prediction == 'CIS' %}cis{% else %}non-cis{% endif %}">{{ r.prediction }}</td>
+                <td>{{ r.confidence }}%</td>
+                <td>{{ r.model_accuracy }}%</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>

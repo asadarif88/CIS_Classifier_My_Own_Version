@@ -1,0 +1,35 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+
+# ---- Virtual environments ----
+.venv/
+venv/
+env/
+
+# ---- Django ----
+*.log
+db.sqlite3
+db.sqlite3-journal
+/cis_project/media/
+local_settings.py
+.env
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# ---- Dataset (too large for GitHub - stored separately) ----
+cis_project/dataset/
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
